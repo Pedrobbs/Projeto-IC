@@ -72,6 +72,7 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` para 
 
 ## Desenvolvido por
 
-**Pedro Braz**  
+**Pedro Braz** 
+**Felipe Souza** 
 🧠💡 Entusiasta de tecnologia, inteligência artificial e soluções digitais para saúde.
 

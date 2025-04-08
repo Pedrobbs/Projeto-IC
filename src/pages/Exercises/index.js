@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { WebView } from "react-native-webview";
 import GeneralButton from "../../components/GeneralButton";
 import CameraView from "../../components/CameraView";
@@ -18,14 +18,13 @@ const videosBySubLevel = {
 
 const Exercises = () => {
   const route = useRoute();
-  const navigation = useNavigation();
   const { week, level, subLevel } = route.params;
   const [showCamera, setShowCamera] = useState(false);
 
   const videoUrl = videosBySubLevel[subLevel] || null;
 
   const startExercise = () => {
-    setShowCamera(true); // Ativa a câmera frontal
+    setShowCamera(true); // Mostra a câmera frontal
   };
 
   return (
@@ -39,8 +38,8 @@ const Exercises = () => {
           <WebView
             source={{ uri: videoUrl }}
             style={{ flex: 1 }}
-            javaScriptEnabled={true}
-            allowsFullscreenVideo={true}
+            javaScriptEnabled
+            allowsFullscreenVideo
           />
         </View>
       ) : (
@@ -59,7 +58,7 @@ const Exercises = () => {
 
       {showCamera && (
         <View style={styles.cameraContainer}>
-          <CameraView showCamera={true} />
+          <CameraView />
         </View>
       )}
     </View>
@@ -69,8 +68,8 @@ const Exercises = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "rgb(39, 62, 146)",
     padding: 20,
     paddingBottom: 80,
@@ -78,23 +77,24 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 20,
+    textAlign: "center",
   },
   text: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   videoContainer: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 20,
   },
   cameraContainer: {
-    width: '100%',
-    height: 300,
+    width: "100%",
+    height: 400,
     marginTop: 20,
   },
 });

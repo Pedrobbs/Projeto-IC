@@ -1,47 +1,52 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Camera } from 'expo-camera';
 
 export default function CameraView() {
   const [hasPermission, setHasPermission] = useState(null);
-  const [showCamera, setShowCamera] = useState(false);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const cameraRef = useRef(null);
 
-  const requestPermissionAndOpenCamera = async () => {
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    setHasPermission(status === 'granted');
-    if (status === 'granted') {
-      setShowCamera(true);
-    }
-  };
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
 
   const handleCameraReady = () => {
     setIsCameraReady(true);
   };
 
+  if (hasPermission === null) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={styles.loadingText}>Verificando permissões...</Text>
+      </View>
+    );
+  }
+
+  if (hasPermission === false) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Permissão da câmera negada.</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      {!showCamera ? (
-        <TouchableOpacity style={styles.button} onPress={requestPermissionAndOpenCamera}>
-          <Text style={styles.buttonText}>Abrir Câmera</Text>
-        </TouchableOpacity>
-      ) : hasPermission === false ? (
-        <Text>Permissão da câmera negada.</Text>
-      ) : (
-        <View style={styles.cameraContainer}>
-          <Camera
-            ref={cameraRef}
-            style={styles.camera}
-            type={Camera.Constants.Type.front}
-            onCameraReady={handleCameraReady}
-          />
-          {!isCameraReady && (
-            <View style={styles.loadingOverlay}>
-              <ActivityIndicator size="small" color="#fff" />
-              <Text style={styles.loadingText}>Inicializando câmera...</Text>
-            </View>
-          )}
+    <View style={styles.cameraContainer}>
+      <Camera
+        ref={cameraRef}
+        style={styles.camera}
+        type={Camera.Constants.Type.front}
+        onCameraReady={handleCameraReady}
+      />
+      {!isCameraReady && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="small" color="#fff" />
+          <Text style={styles.loadingText}>Inicializando câmera...</Text>
         </View>
       )}
     </View>
@@ -55,17 +60,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#000',
-  },
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    backgroundColor: '#1e90ff',
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   cameraContainer: {
     width: '90%',
@@ -85,7 +79,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     color: '#fff',
-    marginLeft: 8,
+    marginTop: 10,
     fontWeight: 'bold',
   },
 });

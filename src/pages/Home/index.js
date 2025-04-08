@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
           return (
             <WeekButton
               key={week}
-              title={`Semana ${week}`}
+              title={`Atividade ${week}`}
               onPress={() => !isLocked && navigation.navigate("Levels", { week })}
               color={isLocked ? "#aaa" : "#fad02c"}
             />

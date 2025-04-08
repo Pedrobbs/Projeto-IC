@@ -1,43 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, ScrollView, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import WeekButton from '../../components/WeekButton';
 
 const Home = ({ navigation }) => {
+  const [unlockedWeeks, setUnlockedWeeks] = useState(1);
+
+  useEffect(() => {
+    const loadProgress = async () => {
+      const saved = await AsyncStorage.getItem('unlockedWeeks');
+      if (saved) setUnlockedWeeks(parseInt(saved));
+    };
+    loadProgress();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image
-          source={require("../../assets/logoPP.png")}
-          style={styles.logo}
-        />
-
-        {Array.from({ length: 8 }, (_, index) => (
-          <WeekButton
-            key={index}
-            title={`Semana ${index + 1}`}
-            onPress={() => navigation.navigate("Levels", { week: index + 1 })}
-          />
-        ))}
-        
+        <Image source={require("../../assets/logoPP.png")} style={styles.logo} />
+        {Array.from({ length: 8 }, (_, index) => {
+          const week = index + 1;
+          const isLocked = week > unlockedWeeks;
+          return (
+            <WeekButton
+              key={week}
+              title={`Semana ${week}`}
+              onPress={() => !isLocked && navigation.navigate("Levels", { week })}
+              color={isLocked ? "#aaa" : "#fad02c"}
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "rgb(39, 62, 146)",
-  },
+  container: { flex: 1, backgroundColor: "rgb(39, 62, 146)" },
   logo: {
     paddingTop: 40,
-    width: "100%",
-    resizeMode: "contain",
-    alignItems: "center",
-    paddingVertical: 40,
-    justifyContent: "center",
     width: 300,
     height: 300,
+    resizeMode: "contain",
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollContainer: {
     paddingTop: 50,

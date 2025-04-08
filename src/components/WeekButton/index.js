@@ -1,29 +1,27 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const WeekButton = ({ title, onPress }) => {
-    return (
-      <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{title}</Text>
-      </TouchableOpacity>
-    );
-  };
-  
+const WeekButton = ({ title, onPress, color = "#fad02c" }) => {
+  return (
+    <TouchableOpacity style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "#fad02c", //cor amarela
-        width: 200, //largura fixa para os botões
-        paddingVertical: 12, //altura do botão
-        borderRadius: 8, //bordas arredondadas
-        marginVertical: 10, //espaçamento entre os botoes
-        alignItems: "center",
-    },
-
-    text:{
-        fontSize: 16, //tamanho do texto
-        fontWeight: "bold", // texto em negrito
-        color: "#000", //texto preto
-    },
+  button: {
+    width: 200,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+  },
 });
 
 export default WeekButton;

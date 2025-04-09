@@ -4,7 +4,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { WebView } from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GeneralButton from "../../components/GeneralButton";
-// import CameraView from "../../components/CameraView"; // comentado temporariamente para testes
+import CameraView from "../../components/CameraView"; // ✅ descomentado
 
 const videosBySubLevel = {
   1: "https://www.youtube.com/watch?v=2cufeBFlkq8",
@@ -72,7 +72,7 @@ const Exercises = () => {
 
       {showCamera && !exerciseFinished && (
         <View style={styles.cameraContainer}>
-          {/* <CameraView /> */} {/* comentado temporariamente para testes*/}
+          <CameraView /> {/* ✅ Agora visível e funcional */}
           <GeneralButton
             title="Finalizar Exercício"
             color="#1abc9c"
@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
   },
   cameraContainer: {
     width: '100%',
-    height: 400,
-    marginTop: 20,
     alignItems: 'center',
+    gap: 20,
+    marginTop: 20,
   },
 });
 

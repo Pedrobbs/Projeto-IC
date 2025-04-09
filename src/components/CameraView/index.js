@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { Camera } from 'expo-camera';
+import * as Camera from 'expo-camera';
 
 export default function CameraView() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -10,6 +10,7 @@ export default function CameraView() {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+      console.log('📸 Permissão da câmera:', status);
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -27,7 +28,7 @@ export default function CameraView() {
     );
   }
 
-  if (hasPermission === false) {
+  if (!hasPermission) {
     return (
       <View style={styles.container}>
         <Text style={styles.loadingText}>Permissão da câmera negada.</Text>
@@ -36,12 +37,13 @@ export default function CameraView() {
   }
 
   return (
-    <View style={styles.cameraContainer}>
-      <Camera
+    <View style={styles.cameraWrapper}>
+      <Camera.Camera
         ref={cameraRef}
         style={styles.camera}
-        type={Camera.Constants.Type.front}
+        type={1} // 1 = front camera
         onCameraReady={handleCameraReady}
+        ratio="16:9"
       />
       {!isCameraReady && (
         <View style={styles.loadingOverlay}>
@@ -55,17 +57,18 @@ export default function CameraView() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 60,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#000',
+    height: 400,
+    width: '100%',
   },
-  cameraContainer: {
-    width: '90%',
+  cameraWrapper: {
+    width: '100%',
     height: 400,
     borderRadius: 12,
     overflow: 'hidden',
+    position: 'relative',
   },
   camera: {
     flex: 1,
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     color: '#fff',
-    marginTop: 10,
+    marginLeft: 10,
     fontWeight: 'bold',
   },
 });

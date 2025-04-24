@@ -34,10 +34,10 @@ export default function CameraView() {
   }
 
   return (
-    <View style={styles.cameraWrapper}>
+    <View style={styles.fullScreen}>
       <Camera.CameraView
         facing={'front'}
-        style={styles.camera}
+        style={styles.fullScreen}
         onCameraReady={handleCameraReady}
       />
       {!isCameraReady && (
@@ -48,25 +48,13 @@ export default function CameraView() {
       )}
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000',
-    height: 400,
-    width: '100%',
-  },
-  cameraWrapper: {
-    width: '100%',
-    height: 400,
-    borderRadius: 12,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  camera: {
+  fullScreen: {
     flex: 1,
+    backgroundColor: '#000',
   },
   loadingOverlay: {
     position: 'absolute',
@@ -81,3 +69,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+

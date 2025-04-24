@@ -17,7 +17,7 @@ const Levels = () => {
 
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>Níveis da semana {week}</Text>
+            <Text style={styles.title}>Níveis da Atividade {week}</Text>
             {levels.map(level => (
                 <LevelButton
                     key={level}

@@ -3,16 +3,13 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import * as Camera from 'expo-camera';
 
 export default function CameraView() {
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, requestPermission] = Camera.useCameraPermissions();
   const [isCameraReady, setIsCameraReady] = useState(false);
+
   const cameraRef = useRef(null);
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      console.log('📸 Permissão da câmera:', status);
-      setHasPermission(status === 'granted');
-    })();
+    requestPermission()
   }, []);
 
   const handleCameraReady = () => {
@@ -28,7 +25,7 @@ export default function CameraView() {
     );
   }
 
-  if (!hasPermission) {
+  if (!hasPermission.granted) {
     return (
       <View style={styles.container}>
         <Text style={styles.loadingText}>Permissão da câmera negada.</Text>
@@ -38,12 +35,10 @@ export default function CameraView() {
 
   return (
     <View style={styles.cameraWrapper}>
-      <Camera.Camera
-        ref={cameraRef}
+      <Camera.CameraView
+        facing={'front'}
         style={styles.camera}
-        type={1} // 1 = front camera
         onCameraReady={handleCameraReady}
-        ratio="16:9"
       />
       {!isCameraReady && (
         <View style={styles.loadingOverlay}>

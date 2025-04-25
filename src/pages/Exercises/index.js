@@ -7,14 +7,14 @@ import GeneralButton from "../../components/GeneralButton";
 import CameraView from "../../components/CameraView";
 
 const videosBySubLevel = {
-  1: "https://www.youtube.com/watch?v=2cufeBFlkq8",
-  2: "https://www.youtube.com/watch?v=ZRexQ28CoXA",
-  3: "https://www.youtube.com/watch?v=DbuX_Fe3Yco",
-  4: "https://www.youtube.com/shorts/NZUY_Bz62vQ",
-  5: "https://www.youtube.com/watch?v=kiEmbhvv7Fo",
-  6: "https://www.youtube.com/shorts/9isTSsvmlZo",
-  7: "https://www.youtube.com/shorts/gJNCS2vyJrE",
-  8: "https://www.youtube.com/watch?v=zRGAn7RWyL8",
+  1: "https://www.youtube.com/watch?v=2cufeBFlkq8", // respiração
+  2: "https://www.youtube.com/watch?v=ZRexQ28CoXA", // alongamento
+  3: "https://www.youtube.com/watch?v=DbuX_Fe3Yco", // sapinho
+  4: "https://www.youtube.com/shorts/NZUY_Bz62vQ", // flat frog
+  5: "https://www.youtube.com/watch?v=kiEmbhvv7Fo", // respiração sentada
+  6: "https://www.youtube.com/shorts/9isTSsvmlZo", // alongamento piriforme
+  7: "https://www.youtube.com/shorts/gJNCS2vyJrE", // dancinha
+  8: "https://www.youtube.com/watch?v=zRGAn7RWyL8", // bicicletado
 };
 
 const Exercises = () => {

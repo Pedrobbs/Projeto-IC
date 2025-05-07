@@ -36,6 +36,12 @@
           "recordAudioAndroid": true
         }
       ]
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
     ]
   }
 }
